@@ -1,0 +1,27 @@
+
+.sidenav {
+    height: 100%;
+    width: 20vw;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: -32vw;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition:right 0.3s ease-in;
+}
+.openDev{
+  right: 0;
+}
+.contained{
+  max-width: 100% !important
+}
+.loginLink{
+  float: right;
+    position: relative;
+    top: 42px;
+    right: -60px;
+    color: #ffffff;
+    font-size: 20px;
+}

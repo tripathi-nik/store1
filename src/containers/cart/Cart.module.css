@@ -1,0 +1,39 @@
+.imageCss{
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+}
+.minicart{
+    position: fixed;
+    background: aqua;
+    z-index: 1000;
+    right: 0;
+    margin-top: -12px
+}
+.carter{
+  float: right;
+    margin-top: -44px;
+    font-size: 30px;
+    color: #ffff;
+    cursor:pointer;
+}
+.float{
+  float: right;
+}
+.hidden{
+  display:none;
+}
+.super{
+  float: right;
+  font-size: 12px;
+  font-weight: 600;
+  color: crimson;
+}
+.contArr{
+  margin-bottom:10px;
+}
+.img{height:60px}
+.secondCont{
+  font-size:14px;
+  font-weight:900;
+}
