@@ -1,4 +1,4 @@
-import React,{useRef} from 'react';
+import React,{useRef,useEffect} from 'react';
 import {connect,useDispatch} from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import classes from './account.module.css';
@@ -7,6 +7,7 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import Toast from '../../toasts/ToastMessage';
 import { useHistory } from "react-router-dom";
+import Recaptcha from "react-recaptcha";
 
 const mapStateToProps = (state)=>{
   const mess = state.message;
@@ -26,6 +27,14 @@ const checkRedirection = (history,userId) =>{
  }, 3000);
 }
 const Body = props =>{
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src =
+      "https://www.google.com/recaptcha/api.js";
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+  },[]);
   const referrer = useRef();
   const enableBtn = useRef();
   const dispatch = useDispatch();
@@ -40,7 +49,7 @@ const Body = props =>{
     <Toast message={message} show="show" state="true"/>}
       <h1 className={classes.headingText}>{props.signupHeader}</h1>
        {console.log(status)}
-      <Formik initialValues={{name:'',email:'',age:'',password:'',address:''}} onSubmit={(values, {setSubmitting})=>{
+      <Formik initialValues={{name:'',email:'',age:'',password:'',address:'',recaptcha: ""}} onSubmit={(values, {setSubmitting})=>{
        dispatch({type:'add_loader',payload:'load'});
         dispatch(accountCreater(values));
        }}
@@ -50,11 +59,12 @@ const Body = props =>{
          name:Yup.string().required("Required"),
          password:Yup.string().required("Required"),
          age:Yup.number().required("Required"),
+         recaptcha: Yup.string().required(),
        })}
       >
       {props=>{
         const {
-          values,touched,errors,isSubmitting,handleChange,handleBlur,handleSubmit
+          values,touched,errors,isSubmitting,handleChange,handleBlur,handleSubmit,setFieldValue
         }=props;
         const testData = () =>{
           status=null;
@@ -106,6 +116,20 @@ const Body = props =>{
                     <div>{errors.address}</div>
                   )}
 
+                </div>
+                <div className="form-group">
+                  <label>Recaptcha Validation</label>
+                  <Recaptcha
+                    sitekey="6Le2nREUAAAAALYuOv7X9Fe3ysDmOmghtj0dbCKW"
+                    render="explicit"
+                    theme="dark"
+                    verifyCallback={(response) => { setFieldValue("recaptcha", response); }}
+                    onloadCallback={() => { console.log("done loading!"); }}
+                  />
+                  {errors.recaptcha
+                    && touched.recaptcha && (
+                    <p>{errors.recaptcha}</p>
+                  )}
                 </div>
                 <div>
                 { loader!==null&&

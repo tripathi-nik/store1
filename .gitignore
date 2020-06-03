@@ -1,7 +1,7 @@
 
 /node_modules
 /build
-.test.html
-.yarn.lock
-.README.md
-.package-lock.json
+/test.html
+/yarn.lock
+/README.md
+/package-lock.json
